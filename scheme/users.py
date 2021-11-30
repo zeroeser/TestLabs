@@ -16,6 +16,18 @@ class UserRepository(BaseRepository):
         query = users.select().limit(limit).offset(skip)
         return await self.database.fetch_all(query)
 
+    async def get_all_by_name(self, name: str, limit: int = 100, skip: int = 0) -> List[User]:
+        query = users.select().where(users.c.name == name).limit(limit).offset(skip)
+        return await self.database.fetch_all(query)
+
+    async def get_all_by_patronymic(self, patronymic: str, limit: int = 100, skip: int = 0) -> List[User]:
+        query = users.select().where(users.c.patronymic == patronymic).limit(limit).offset(skip)
+        return await self.database.fetch_all(query)
+
+    async def get_all_by_surname(self, surname: str, limit: int = 100, skip: int = 0) -> List[User]:
+        query = users.select().where(users.c.surname == surname).limit(limit).offset(skip)
+        return await self.database.fetch_all(query)
+
     async def get_by_id(self, id: int) -> Optional[User]:
         query = users.select().where(users.c.id == id)
         user = await self.database.fetch_one(query=query)
