@@ -29,6 +29,21 @@ async def read_users(email: str, users: UserRepository = Depends(get_user_reposi
     return await users.get_by_email(email=email)
 
 
+@router.get("/name", response_model=List[User])
+async def read_users(name: str, users: UserRepository = Depends(get_user_repository), limit: int = 100, skip: int = 0):
+    return await users.get_all_by_name(name=name, limit=limit, skip=0)
+
+
+@router.get("/patronymic", response_model=List[User])
+async def read_users(patronymic: str, users: UserRepository = Depends(get_user_repository), limit: int = 100, skip: int = 0):
+    return await users.get_all_by_patronymic(patronymic=patronymic, limit=limit, skip=0)
+
+
+@router.get("/surname", response_model=List[User])
+async def read_users(surname: str, users: UserRepository = Depends(get_user_repository), limit: int = 100, skip: int = 0):
+    return await users.get_all_by_surname(surname=surname, limit=limit, skip=0)
+
+
 @router.post("/", response_model=User)
 async def create_user(
     user: User,
